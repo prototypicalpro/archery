@@ -3,16 +3,24 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+#[cfg(not(feature = "std"))]
+extern crate core as lib;
+#[cfg(feature = "std")]
+extern crate std as lib;
+
 use crate::shared_pointer::kind::SharedPointerKind;
-use std::fmt;
-use std::fmt::Debug;
-use std::fmt::Formatter;
-use std::mem;
-use std::mem::ManuallyDrop;
-use std::ops::Deref;
-use std::ops::DerefMut;
-use std::ptr;
-use std::sync::Arc;
+use lib::fmt;
+use lib::fmt::Debug;
+use lib::fmt::Formatter;
+use lib::mem;
+use lib::mem::ManuallyDrop;
+use lib::ops::Deref;
+use lib::ops::DerefMut;
+use lib::ptr;
+#[cfg(feature = "std")]
+use lib::sync::Arc;
+#[cfg(not(feature = "std"))]
+use alloc::{ sync::Arc, boxed::Box };
 
 type UntypedArc = Arc<()>;
 

@@ -3,20 +3,28 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+#[cfg(not(feature = "std"))]
+extern crate core as lib;
+#[cfg(feature = "std")]
+extern crate std as lib;
+
 use crate::shared_pointer::kind::SharedPointerKind;
-use std::borrow::Borrow;
-use std::cmp::Ordering;
-use std::fmt;
-use std::fmt::Debug;
-use std::fmt::Display;
-use std::fmt::Formatter;
-use std::hash::Hash;
-use std::hash::Hasher;
-use std::marker::PhantomData;
-use std::mem;
-use std::mem::ManuallyDrop;
-use std::ops::Deref;
-use std::ptr;
+use lib::borrow::Borrow;
+use lib::cmp::Ordering;
+use lib::fmt;
+use lib::fmt::Debug;
+use lib::fmt::Display;
+use lib::fmt::Formatter;
+use lib::hash::Hash;
+use lib::hash::Hasher;
+use lib::marker::PhantomData;
+use lib::mem;
+use lib::mem::ManuallyDrop;
+use lib::ops::Deref;
+use lib::ptr;
+
+#[cfg(not(feature = "std"))]
+use alloc::boxed::Box;
 
 /// Pointer to shared data with reference-counting.
 ///

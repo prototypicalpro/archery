@@ -3,7 +3,15 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-use std::fmt::Debug;
+#[cfg(not(feature = "std"))]
+extern crate core as lib;
+#[cfg(feature = "std")]
+extern crate std as lib;
+
+use lib::fmt::Debug;
+
+#[cfg(not(feature = "std"))]
+use alloc::boxed::Box;
 
 /// Trait for [type constructors](https://en.wikipedia.org/wiki/Type_constructor) of
 /// reference-counting pointers.
@@ -32,9 +40,11 @@ pub trait SharedPointerKind: Sized + Debug {
     unsafe fn drop<T>(&mut self);
 }
 
+#[cfg(feature = "has_atomics")]
 mod arc;
 mod rc;
 
+#[cfg(feature = "has_atomics")]
 #[doc(inline)]
 pub use arc::ArcK;
 #[doc(inline)]

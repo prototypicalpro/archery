@@ -113,6 +113,10 @@
 //! but offers ugly ergonomics (see
 //! [here](https://github.com/Marwes/rpds/blob/e482d5abbaa6c876d7c624e497affe7299bbeece/src/sequence/vector/mod.rs#L153)
 //! and [here](https://github.com/Marwes/rpds/blob/e482d5abbaa6c876d7c624e497affe7299bbeece/src/sequence/vector/mod.rs#L249)).
+#![cfg_attr(not(feature = "std"), no_std)]
+
+#[cfg(not(feature = "std"))]
+extern crate alloc;
 
 pub mod shared_pointer;
 
@@ -120,6 +124,7 @@ pub use shared_pointer::SharedPointer;
 
 pub use shared_pointer::kind::SharedPointerKind;
 
+#[cfg(feature = "has_atomics")]
 #[doc(no_inline)]
 pub use shared_pointer::kind::ArcK;
 #[doc(no_inline)]

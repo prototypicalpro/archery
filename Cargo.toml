@@ -47,7 +47,10 @@ pretty_assertions = "0.6"
 compiletest_rs = { version = "0.5", features = [ "tmp" ] }
 
 [features]
+default = ["std", "has_atomics"]
 fatal-warnings = []
+std = []
+has_atomics = []
 
 [[bench]]
 name = "std_rc"
